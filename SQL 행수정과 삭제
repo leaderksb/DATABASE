@@ -1,0 +1,9 @@
+UPDATE topic
+  SET
+  title = 'MSSQL',
+  description = 'MSSQL is...'
+  WHERE
+  id = 3;
+SELECT * FROM topic;
+DELETE FROM topic WHERE id = 3;
+  commit;
