@@ -1,0 +1,6 @@
+cd 주소;
+mysql -uroot -p;
+pw 입력;
+SHOW DATABASES;
+USE 사용할 테이블명;
+SHOW TABLES;
