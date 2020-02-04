@@ -1,0 +1,11 @@
+INSERT INTO topic(id, title, created) VALUES (3, 'SQL Server', SYSDATE);
+INSERT INTO topic(id, title, created) VALUES (4, 'MongoDB', SYSDATE);
+  commit;
+CREATE SEQUENCE SEQ_TOPIC;
+DELETE FROM topic;
+  commit;
+INSERT INTO topic(id, title, created) VALUES (SEQ_TOPIC.NEXTVAL, 'ORACLE', SYSDATE);
+INSERT INTO topic(id, title, created) VALUES (SEQ_TOPIC.NEXTVAL, 'MySQL', SYSDATE);
+  commit;
+SELECT SEQ_TOPIC.CURRVAL FROM topic;
+  commit;
