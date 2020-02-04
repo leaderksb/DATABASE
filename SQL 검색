@@ -1,0 +1,14 @@
+SELECT id, title, created FROM topic;
+SELECT * FROM topic WHERE id = 1;
+SELECT * FROM topic WHERE id > 1;
+SELECT id, title, created FROM topic WHERE id = 1;
+SELECT * FROM topic ORDER BY id DESC;
+SELECT * FROM topic ORDER BY id ASC;
+SELECT * FROM topic ORDER BY title ASC;
+SELECT * FROM topic
+  OFFSET 1 ROWS;
+SELECT * FROM topic
+  OFFSET 2 ROWS;
+SELECT * FROM topic
+  OFFSET 0 ROWS
+  FETCH NEXT 1 ROWS ONLY;
