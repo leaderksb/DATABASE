@@ -1,0 +1,3 @@
+cmd 창 자동 줄바꿈으로 인한 짤림시
+set linesize 1000
+set pagesize 100
