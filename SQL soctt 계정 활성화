@@ -1,0 +1,7 @@
+@C:\oraclexe\app\oracle\product\11.2.0\server\rdbms\admin\scott.sql
+show user;
+alter user scott identified by tiger;
+exit;
+sqlplus scott/tiger
+select * from tab;
+desc emp;
