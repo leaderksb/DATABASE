@@ -1,0 +1,32 @@
+desc emp;
+desc dept;
+desc salgrade;
+emp 테이블의 deptno 열 조회
+select deptno
+  from emp;
+열 중복 제거
+select distinct deptno
+  from emp;
+select distinct job, deptno
+  from emp;
+열 중복 제거 없이 그대로 출력
+select all job, deptno
+  from emp;
+select ename, sal, sal*12+comm, comm
+  from emp;
+select ename, sal, sal+sal+sal+sal+sal+sal+sal+sal+sal+sal+sal+sal+comm, comm
+  from emp;
+별칭 지정하기
+select ename, sal, sal*12+comm as annsal, comm
+  from emp;
+select * from emp
+  order by sal;
+내림차순
+select * from emp
+  order by sal desc;
+오름차순
+select * from emp
+  order by sal asc;
+내림차순과 오름차순 동시 사용
+select * from emp
+  order by deptno asc, sal desc;
