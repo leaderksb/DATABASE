@@ -1,0 +1,69 @@
+UPPER : 모두 대문자로 변환, LOWER : 모두 소문자로 변환, INITCAP : 첫글자만 대문자로 나머지는 소문자로 변환
+select ename, upper(ename), lower(ename), initcap(ename)
+  from emp;
+select * from emp
+  where upper(ename) = upper('scott');
+select * from emp
+  where upper(ename) like upper('%scott%');
+문자열 길이
+select ename, length(ename)
+  from emp;
+select ename, length(ename) from emp
+  where length(ename) >= 5;
+select length('한글'), lengthb('한글') from emp;
+select length('한글'), lengthb('한글') from dual;
+문자열 일부 추출
+select job, substr(job, 1, 2), substr(job, 3, 2), substr(job, 5) from emp;
+select substr(ename, 3) from emp;
+select job,
+  substr(job, -length(job)),
+  substr(job, -length(job), 2),
+  substr(job, -3)
+  from emp;
+select instr('HELLO, ORACLE!', 'L') as instr_1,
+       instr('HELLO, ORACLE!', 'L', 5) as instr_2,
+       instr('HELLO, ORACLE!', 'L', 2, 2) as instr_3
+  from dual;
+INSTR 함수의 결과 값이 0보다 크다면 결과가 존재하다는 의미
+select * from emp
+  where instr(ename, 'S') > 0;
+select * from emp
+  where instr(ename, 'S') = 0;
+select * from emp
+  where ename like '%S%';
+REPLACE
+select '010-7462-6013' as replace_before,
+  replace('010-7462-6013', '-', ' ') as replace_1,
+  replace('010-7462-6013', '-') as replace_2
+  from dual;
+빈 공간 채우기 LPAD, RPAD
+select 'Oracle',
+  lpad('Oracle', 10, '#') as lpad_1,
+  rpad('Oracle', 10, '*') as rpad_1,
+  lpad('Oracle', 10) as lpad_2,
+  rpad('Oracle', 10) as rpad_2
+  from dual;
+select
+  rpad('970304-', 14, '♥') as rpad_jmno,
+  rpad('010-4013-', 13, '★') as rpad_phone
+  from dual;
+두 문자열 합치기 CONCAT
+select concat(empno, ename),
+       concat(empno, concat(' : ', ename))
+  from emp
+  where ename = 'KING';
+select empno || ename,
+  empno || ' : ' || ename
+  from emp;
+특정문자 삭제
+select '[' || trim(' _ _Oracle_ _ ') || ']' as trim,
+       '[' || trim(LEADING from ' _ _Oracle_ _ ') || ']' as trim_leading,
+       '[' || trim(TRAILING from ' _ _Oracle_ _ ') || ']' as trim_trailing,
+       '[' || trim(BOTH from ' _ _Oracle_ _ ') || ']' as trim_both
+  from dual;
+select '[' || trim(' _Oracle_ ') || ']' as trim,
+       '[' || ltrim(' _Oracle_ ') || ']' as ltrim_1,
+       '[' || ltrim('<_Oracle_>', '_<') || ']' as ltrim_2,
+       '[' || rtrim(' _Oracle_ ') || ']' as rtrim_1,
+       '[' || rtrim('<_Oracle_>', '>_') || ']' as rtrim_2
+  from dual;
