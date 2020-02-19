@@ -1,0 +1,29 @@
+sqlplus
+create user mall identified BY java;
+grant connect, dba, resource to mall;
+create table customer(
+  name varchar2(20) not null,
+  birth varchar2(10),
+  tel varchar2(20) not null,
+  email varchar2(320),
+  id varchar2(20) primary key,
+  pw varchar2(20) not null,
+  address varchar2(100)
+);
+create table goods(
+  gnumber varchar2(100) primary key,
+  gname varchar2(20) not null,
+  img varchar2(300),
+  text varchar2(3000)
+);
+create table delivery(
+  oaddress varchar2(100) not null,
+  naddress varchar2(100)
+);
+create table ordered(
+  onumber varchar2(100) primary key,
+  item varchar2(100) not null,
+  total varchar2(100) not null,
+  id varchar2(20),
+  constraints id_cascade foreign key (id) references customer(id) on delete cascade
+);
