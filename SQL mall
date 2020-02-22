@@ -10,11 +10,16 @@ create table customer(
   pw varchar2(20) not null,
   address varchar2(100)
 );
+create table category(
+  cname varchar2(100),
+  num number(2) primary key
+);
 create table goods(
   gnumber varchar2(100) primary key,
   gname varchar2(20) not null,
   img varchar2(300),
-  text varchar2(3000)
+  text varchar2(3000), num number(2),
+  constraints num_cascade foreign key (num) references category(num) on delete cascade
 );
 create table delivery(
   oaddress varchar2(100) not null,
