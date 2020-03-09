@@ -225,3 +225,28 @@ select empno, ename, comm,
     when comm > 0 then '수당 : ' || comm
   end as comm_text
   from emp;
+6장 문제
+select empno, substr(empno, 1, 2) || '**' as masking_empno,
+ename, substr(ename, 1, 1) || '****' as masking_ename
+  from emp
+  where (length(ename) >= 5 and length(ename) < 6);
+select empno, ename, sal,
+  trunc(sal/21.5, 2) as day_pay,
+  round(trunc(sal/21.5, 3)/8, 1) as time_pay
+  from emp;
+select empno, ename, hiredate,
+replace(next_day(add_months(hiredate, 3), '월요일'), '/', '-') as r_job,
+decode(comm,
+	null, 'N/A',
+	comm) as comm
+  from emp;
+select empno, ename, mgr,
+case
+	when substr(mgr, 1, 2) = '75' then '5555'
+	when substr(mgr, 1, 2) = '76' then '6666'
+	when substr(mgr, 1, 2) = '77' then '7777'
+	when substr(mgr, 1, 2) = '78' then '8888'
+	when mgr is null then '0000'
+	else to_char(mgr)
+end as chg_mgr
+from emp;
