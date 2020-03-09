@@ -1,0 +1,167 @@
+다중행 함수
+select sum(sal)
+  from emp;
+select sum(comm)
+  from emp;
+select sum(distinct sal),
+  sum(all sal),
+  sum(sal)
+  from emp;
+select count(*)
+  from emp;
+select count(*)
+  from emp
+  where deptno = 30;
+select count(distinct sal),
+       count(all sal),
+       count(sal)
+  from emp;
+select count(comm)
+  from emp;
+select count(comm)
+  from emp
+  where comm is not null;
+select max(sal)
+  from emp
+  where deptno = 10;
+select min(sal)
+  from emp
+  where deptno = 10;
+select max(hiredate)
+  from emp
+  where deptno = 20;
+select min(hiredate)
+  from emp
+  where deptno = 20;
+select avg(sal)
+  from emp
+  where deptno = 30;
+select avg(distinct sal)
+  from emp
+  where deptno = 30;
+GROUP BY 절
+select avg(sal) from emp where deptno = 10;
+select avg(sal) from emp where deptno = 20;
+select avg(sal) from emp where deptno = 30;
+select avg(sal), '10' as deptno from emp where deptno = 10
+union all
+select avg(sal), '20' as deptno from emp where deptno = 20
+union all
+select avg(sal), '30' as deptno from emp where deptno = 30;
+select avg(sal), deptno
+  from emp
+  group by deptno;
+select deptno, job, avg(sal)
+  from emp
+  group by deptno, job
+  order by deptno, job;
+select ename, deptno, avg(sal)
+  from emp
+  group by deptno;
+HAVING 절
+select deptno, job, avg(sal)
+  from emp
+  group by deptno, job
+  having avg(sal) >= 2000
+  order by deptno, job;
+select deptno, job, avg(sal)
+  from emp
+  where sal <= 3000
+  group by deptno, job
+  having avg(sal) >= 2000
+  order by deptno, job;
+select deptno, job, sal
+  from emp
+  where sal <= 3000
+  order by deptno, job;
+그룹화 관련 여러 함수
+select deptno, job, count(*), max(sal), sum(sal), avg(sal)
+  from emp
+  group by deptno, job
+  order by deptno, job;
+select deptno, job, count(*), max(sal), min(sal), sum(sal), avg(sal)
+  from emp
+  group by rollup(deptno, job);
+select deptno, job,count(*), max(sal), sum(sal), avg(sal)
+  from emp
+  group by cube(deptno, job)
+  order by deptno, job;
+select deptno, job, count(*)
+  from emp
+  group by deptno, rollup(job);
+select deptno, job, count(*)
+  from emp
+  group by job, rollup(deptno);
+select deptno, job, count(*)
+  from emp
+  group by grouping sets(deptno, job)
+  order by deptno, job;
+select deptno, job, count(*), max(sal), sum(sal), avg(sal),
+  grouping(deptno),
+  grouping(job)
+  from emp
+  group by cube(deptno, job)
+  order by deptno, job;
+select decode(grouping(deptno), 1, 'all_dept', deptno) as deptno,
+       decode(grouping(job), 1, 'all_job', job) as job,
+       count(*), max(sal), sum(sal), avg(sal)
+  from emp
+  group by cube(deptno, job)
+  order by deptno, job;
+select deptno, job, count(*), sum(sal),
+  grouping(deptno),
+  grouping(job),
+  grouping_id(deptno, job)
+  from emp
+  group by cube(deptno,job)
+  order by deptno, job;
+select deptno, ename
+  from emp
+  group by deptno, ename;
+select deptno,
+  listagg(ename, ', ')
+  within group(order by sal desc) as enames
+  from emp
+  group by deptno;
+select deptno, job, max(sal)
+  from emp
+  group by deptno, job
+  order by deptno, job;
+select *
+  from(select deptno, job, sal
+       from emp)
+  pivot(max(sal)
+       for deptno in (10, 20, 30))
+  order by job;
+select *
+  from(select job, deptno, sal
+       from emp)
+  pivot(max(sal)
+       for job in ('CLERK' as clerk,
+                   'SALESMAN' as salesman,
+                   'PRESIDENT' as president,
+                   'MANAGER' as manager,
+                   'ANALYST' as analyst))
+  order by deptno;
+select deptno,
+  max(decode(job, 'CLERK', sal)) as "CLERK",
+  max(decode(job, 'SALESMAN', sal)) as "SALESMAN",
+  max(decode(job, 'PRESIDENT', sal)) as "PRESIDENT",
+  max(decode(job, 'MANAGER', sal)) as "MANAGER",
+  max(decode(job, 'ANALYST', sal)) as "ANALYST"
+  from emp
+  group by deptno
+  order by deptno;
+select *
+  from(select deptno,
+  max(decode(job, 'CLERK', sal)) as "CLERK",
+  max(decode(job, 'SALESMAN', sal)) as "SALESMAN",
+  max(decode(job, 'PRESIDENT', sal)) as "PRESIDENT",
+  max(decode(job, 'MANAGER', sal)) as "MANAGER",
+  max(decode(job, 'ANALYST', sal)) as "ANALYST"
+  from emp
+  group by deptno
+  order by deptno)
+  unpivot(
+  sal for job in (clerk, salesman, president, manager, analyst))
+  order by deptno, job;
