@@ -165,3 +165,15 @@ select *
   unpivot(
   sal for job in (clerk, salesman, president, manager, analyst))
   order by deptno, job;
+7장 문제
+select deptno, trunc(avg(sal)) as avg_sal, max(sal) as max_sal,
+  min(sal) as min_sal, count(ename) as cnt
+  from emp group by deptno;
+select job, count(job)
+  from emp
+  group by job
+  having count(job) >=3;
+select to_char(hiredate, 'yyyy') as hire_year, deptno, count(empno) as cnt
+  from emp
+  group by to_char(hiredate, 'yyyy'), deptno;
+select nvl2(comm, 'O', 'X') as exist_comm from emp group by nvl2(comm, 'O', 'X');
