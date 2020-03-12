@@ -81,3 +81,35 @@ select e1.empno, e1.ename, e1.mgr,
        e2.ename as mgr_ename
   from emp e1 full outer join emp e2 on (e1.mgr = e2.empno)
   order by e1.empno;
+8장 문제
+select d.deptno, d.dname, e.empno, e.ename, e.sal
+  from dept d, emp e
+  where d.deptno = e.deptno
+  and sal > 2000;
+select deptno, d.dname, e.empno, e.ename, e.sal
+  from dept d natural join emp e
+  where sal > 2000;
+select d.deptno, d.dname,
+       avg(e.sal) as avg_sal, max(e.sal) as max_sal,
+       min(e.sal) as min_sal, count(e.sal) as cnt
+  from dept d, emp e
+  where d.deptno = e.deptno
+  group by d.deptno, d.dname;
+select deptno, d.dname,
+       avg(e.sal) as avg_sal, max(e.sal) as max_sal,
+       min(e.sal) as min_sal, count(e.sal) as cnt
+  from dept d natural join emp e
+  group by deptno, d.dname;
+select deptno, d.dname,
+       e.empno, e.ename, e.job, e.sal
+  from dept d natural join emp e
+  where deptno = deptno;
+select d.deptno, d.dname,
+       e1.empno, e1.ename, e1.mgr, e1.sal, e1.deptno as deptno_1,
+       s.losal, s.hisal, s.grade,
+       e2.empno as mgr_empno, e2.ename as mgr_ename
+       from dept d, emp e1, emp e2, salgrade s
+       where d.deptno = e1.deptno(+)
+       and e1.mgr = e2.empno(+)
+       and e1.sal between s.losal(+) and s.hisal(+)
+       order by deptno;
