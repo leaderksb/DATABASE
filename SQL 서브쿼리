@@ -84,3 +84,16 @@ select empno, ename, job, sal,
   (select dname from dept
      where e.deptno = dept.deptno) as dname
   from emp e;
+9장 문제
+select * from emp
+  where job = (select job from emp
+  where ename = 'ALLEN');
+select * from emp
+  where sal > (select avg(sal) from emp);
+
+
+
+select e.empno, e.ename, e.job, e.deptno, d.dname, d.loc from emp e join dept d on (e.deptno = d.deptno)
+  where e.deptno = 10
+  and e.job = (select job from emp
+  where deptno = 30);
